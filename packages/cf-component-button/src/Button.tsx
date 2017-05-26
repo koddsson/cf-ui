@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { createComponent } from 'cf-style-container';
 
 const radius = (borderRadius, group) => {
@@ -124,7 +123,28 @@ const styles = props => {
   };
 };
 
-class Button extends React.Component {
+export interface ButtonProps {
+  onClick?: (Event) => void,
+  submit?: boolean,
+  spaced?: boolean,
+  className?: string,
+  disabled?: boolean,
+  loading?: boolean,
+  type?: 'default' | 'primary' | 'success' | 'warning' | 'danger',
+  group?: 'first' | 'inbetween' | 'last',
+  children?: any
+}
+
+export interface IButton<P, S> extends React.Component<P, S> {
+
+}
+
+class Button extends React.Component<ButtonProps, undefined> implements IButton<ButtonProps, undefined> {
+  public static defaultProps: ButtonProps = {
+    type: 'default',
+    submit: false
+  };
+
   render() {
     const {
       onClick,
@@ -146,25 +166,5 @@ class Button extends React.Component {
     );
   }
 }
-
-Button.propTypes = {
-  onClick: PropTypes.func,
-  submit: PropTypes.bool,
-  spaced: PropTypes.bool,
-  className: PropTypes.string.isRequired,
-  group: PropTypes.oneOf(['first', 'inbetween', 'last']),
-  type: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'danger'])
-    .isRequired,
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
-  children: PropTypes.node
-};
-
-Button.defaultProps = {
-  type: 'default',
-  submit: false
-};
-
-Button.displayName = 'Button';
 
 export default createComponent(styles, Button);

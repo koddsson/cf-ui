@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { createComponent } from 'cf-style-container';
+import { IButton, ButtonProps } from './Button';
 
 const styles = props => {
   const theme = props.theme;
@@ -33,17 +33,18 @@ const addGroupProps = (children, spaced) =>
     return child;
   });
 
-class ButtonGroup extends React.Component {
+
+export interface ButtonGroupProps {
+  children?: IButton<ButtonProps, undefined>[],
+  spaced?: boolean,
+  className?: string
+}
+
+class ButtonGroup extends React.Component<ButtonGroupProps, undefined> {
   render() {
     const { className, children, spaced } = this.props;
     return <div className={className}>{addGroupProps(children, spaced)}</div>;
   }
 }
-
-ButtonGroup.propTypes = {
-  children: PropTypes.node,
-  spaced: PropTypes.bool,
-  className: PropTypes.string.isRequired
-};
 
 export default createComponent(styles, ButtonGroup);
